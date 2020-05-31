@@ -14,7 +14,8 @@ class Todos extends React.Component {
         // pass item to each Todoitem component
         // Each child in a list should have a unique "key" prop else an error will be seen in the dev tools although it wont break the application. But to
         //  supress it, create a key as seen below
-        <Todoitem key={item.id} todo={ item }/>
+        // c. added markComplete value to send it UP THE DOM to App.js (received value from Todoitem.js as a binded value see step b.)
+        <Todoitem key={item.id} todo={ item } markComplete={this.props.markComplete} />
     ));
   }
   

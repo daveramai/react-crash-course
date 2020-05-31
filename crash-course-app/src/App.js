@@ -27,6 +27,18 @@ class App extends React.Component {
     ]
   }
 
+  // e. Update the array with the id received from step d.
+  ToggleComplete = (id) => {
+        // console.log(id)
+        // change the state for the id received
+        this.setState({ todos: this.state.todos.map(item => {
+          if(item.id === id) {
+            item.completed = !item.completed //toggle state value here
+          }
+          return item; //send state value down the DOM to Todoitem??
+        }) });
+  } //end custom arrow function
+
   render() {
     // test access to state using chrome tools
     //console.log(this.state.todos)
@@ -34,7 +46,8 @@ class App extends React.Component {
       <div className="App">
         {/* Add comment using CTRL+/ */}
         {/* renders the todos component and pass state to it */}
-        <Todos todos={this.state.todos} />
+        {/* d. added ToggleComplete as a function to receive the value from Todos.js see step c. */}
+        <Todos todos={this.state.todos} markComplete={ this.ToggleComplete } />
       </div>
     );
   }
