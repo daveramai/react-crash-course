@@ -1,8 +1,9 @@
 import React from 'react';
 import './App.css';
-// Header function for static html
 import Todos from './components/Todos';
 import Header from './components/layout/Header';
+import Addtodo from './components/AddTodo';
+import {v1 as uuid} from "uuid"; 
 
 class App extends React.Component {
   state = {
@@ -10,19 +11,19 @@ class App extends React.Component {
     todos: [
       {
         // First object in the array
-        id: 1,
+        id: uuid(),
         title: 'Take out the trash',
         completed: false
       },
       {
         // Second object in the array
-        id: 2,
+        id: uuid(),
         title: 'Dinner with wife',
         completed: false
       },
       {
         // Third object in the array
-        id: 3,
+        id: uuid(),
         title: 'Meeting with boss',
         completed: false
       },
@@ -53,16 +54,32 @@ class App extends React.Component {
 
   } //end delete todo function
 
+  AddTodo = (title) => {
+    // console.log(title)
+    // Add this value to our state as well - use spread operator to make a copy of the state currently
+    const newTodo = {
+      //manual id here for now
+      id: uuid(),
+      title: title,
+      completed: false
+    }
+
+    this.setState({todos: [...this.state.todos, newTodo] });
+  }
+
   render() {
     // test access to state using chrome tools
     //console.log(this.state.todos)
     return (
       <div className="App">
-        <Header />
-        {/* Add comment using CTRL+/ */}
-        {/* renders the todos component and pass state to it */}
-        {/* d. added ToggleComplete as a function to receive the value from Todos.js see step c. */}
-        <Todos todos={this.state.todos} markComplete={ this.ToggleComplete } delTodo={ this.DeleteTodo } />
+        <div className="container">
+            <Header />
+            <Addtodo addTodo={this.AddTodo} />
+            {/* Add comment using CTRL+/ */}
+            {/* renders the todos component and pass state to it */}
+            {/* d. added ToggleComplete as a function to receive the value from Todos.js see step c. */}
+            <Todos todos={this.state.todos} markComplete={ this.ToggleComplete } delTodo={ this.DeleteTodo } />
+        </div>
       </div>
     );
   }
