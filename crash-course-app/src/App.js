@@ -6,31 +6,19 @@ import Todos from './components/Todos';
 import Header from './components/layout/Header';
 import Addtodo from './components/AddTodo';
 import About from './components/pages/About';
-import {v1 as uuid} from "uuid";
+import axios from 'axios';
 
 class App extends React.Component {
   state = {
-    // An array of Todos created
-    todos: [
-      {
-        // First object in the array
-        id: uuid(),
-        title: 'Take out the trash',
-        completed: false
-      },
-      {
-        // Second object in the array
-        id: uuid(),
-        title: 'Dinner with wife',
-        completed: false
-      },
-      {
-        // Third object in the array
-        id: uuid(),
-        title: 'Meeting with boss',
-        completed: false
-      },
-    ]
+    // Fetch tTodos from JsonPlaceholder endpoint
+    todos: []
+  }
+
+  // Another lifecycle method - runs before Render method
+  componentDidMount() {
+    // the .get line below gives us a promise then a response is receined 'res' with response data 'res.data'
+    axios.get('https://jsonplaceholder.typicode.com/todos?_limit=10')
+    .then(res => this.setState({ todos: res.data }) ) //we're pulling the todos from the website and populating the todos array
   }
 
   // e. Update the array with the id received from step d.
@@ -47,30 +35,25 @@ class App extends React.Component {
 
   // Delete Todo item
   DeleteTodo = (id) => {
-    // console.log(id);
-    // Only return only the items other than this id
-    this.setState({
-      // ... means we copy what's already there, so ... is the spread operator
-      // filter out the item that matches withthe id provided
-      todos: [...this.state.todos.filter(item => item.id !== id)]
-    })
-
+    axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
+    .then(res => this.setState({todos: [...this.state.todos.filter
+      (item => item.id !== id)] }));
   } //end delete todo function
 
   AddTodo = (title) => {
-    // console.log(title)
-    // Add this value to our state as well - use spread operator to make a copy of the state currently
-    const newTodo = {
-      //manual id here for now
-      id: uuid(),
-      title: title,
+    axios.post('https://jsonplaceholder.typicode.com/todos', {
+      // simulate sending data to the server (POST request)
+      title,
       completed: false
-    }
-
-    this.setState({todos: [...this.state.todos, newTodo] });
+    })
+    // this gives us a promise back - a response 'res' a response data 'res.data'
+    .then(res => this.setState({todos: 
+    [...this.state.todos, res.data] }) );
+    
   }
 
 
+  // This is a lifecycle method
   render() {
     // test access to state using chrome tools
     //console.log(this.state.todos)

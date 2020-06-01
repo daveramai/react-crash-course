@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export class AddTodo extends Component {
 
@@ -42,6 +43,12 @@ export class AddTodo extends Component {
             </form>
         )
     }
+} //end render
+
+// PropTypes defined for this class (as good practice)
+AddTodo.propTypes = {
+    // todos is a prop of type array and is required
+    addTodo: PropTypes.func.isRequired
 }
 
 export default AddTodo

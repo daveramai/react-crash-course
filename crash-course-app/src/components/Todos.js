@@ -24,7 +24,9 @@ class Todos extends React.Component {
 // PropTypes defined for this class (as good practice)
 Todos.propTypes = {
     // todos is a prop of type array and is required
-    todos: PropTypes.array.isRequired
+    todos: PropTypes.array.isRequired,
+    markComplete: PropTypes.func.isRequired,
+    delTodo: PropTypes.func.isRequired
 }
 
 export default Todos;
