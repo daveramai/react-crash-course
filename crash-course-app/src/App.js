@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
+// Header function for static html
 import Todos from './components/Todos';
+import Header from './components/layout/Header';
 
 class App extends React.Component {
   state = {
@@ -39,15 +41,28 @@ class App extends React.Component {
         }) });
   } //end custom arrow function
 
+  // Delete Todo item
+  DeleteTodo = (id) => {
+    // console.log(id);
+    // Only return only the items other than this id
+    this.setState({
+      // ... means we copy what's already there, so ... is the spread operator
+      // filter out the item that matches withthe id provided
+      todos: [...this.state.todos.filter(item => item.id !== id)]
+    })
+
+  } //end delete todo function
+
   render() {
     // test access to state using chrome tools
     //console.log(this.state.todos)
     return (
       <div className="App">
+        <Header />
         {/* Add comment using CTRL+/ */}
         {/* renders the todos component and pass state to it */}
         {/* d. added ToggleComplete as a function to receive the value from Todos.js see step c. */}
-        <Todos todos={this.state.todos} markComplete={ this.ToggleComplete } />
+        <Todos todos={this.state.todos} markComplete={ this.ToggleComplete } delTodo={ this.DeleteTodo } />
       </div>
     );
   }

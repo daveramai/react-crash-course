@@ -36,11 +36,14 @@ export class Todoitem extends Component {
             <div style={ this.getStyle() }>
                 {
                 // b. Add checkbox and pass the id value UP THE DOM back to the Todos component (nb: must bind this)
-                <input type="checkbox" onChange={this.props.markComplete.bind(this, id) } />
+                <input type="checkbox" onChange={ this.props.markComplete.bind(this, id) } />
 
                 /* Return the todo title sent from Todos component map function */}
                 {/* Used deconstructed value for 'title' */}
-                <p>{ title }</p> 
+                { title }
+
+                {/* Add delete functionality for a Todoitem component */}
+                <button onClick={ this.props.delTodo.bind(this, id) } style={btnStyle} />
             </div>
         )
     } //end render
@@ -53,6 +56,17 @@ Todoitem.propTypes = {
     // todos is a prop of type array and is required
     todo: PropTypes.object.isRequired
 }
+
+// Add button style
+const btnStyle = {
+    background: "#ff0000",
+    color: "#fff",
+    border: "none",
+    padding: "5px 7px",
+    borderRadius: "50%",
+    cursor: "pointer",
+    float: "right",
+  };
 
 
 export default Todoitem
