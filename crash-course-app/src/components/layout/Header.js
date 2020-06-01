@@ -1,9 +1,15 @@
 import React from 'react';
+// this import is needed since we cannot use A tags for router
+import { Link } from 'react-router-dom';
 
 function Header() {
     return (
         <header style={headerStyle}>
             <h1>TodoList</h1>
+            {/* use the Router Link here */}
+            <Link style={linkStyle} to="/">Home</Link>
+            &nbsp;|&nbsp;
+            <Link style={linkStyle} to="/about">About</Link>
         </header>
     )
 } //end function
@@ -13,6 +19,11 @@ const headerStyle = {
     color: '#fff',
     textAlign: 'center',
     padding: '10px'
+  }
+
+  const linkStyle = {
+      color: '#fff',
+      textDecoration: 'none'
   }
 
 export default Header;

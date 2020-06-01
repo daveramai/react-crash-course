@@ -1,9 +1,12 @@
 import React from 'react';
 import './App.css';
+// React router
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Todos from './components/Todos';
 import Header from './components/layout/Header';
 import Addtodo from './components/AddTodo';
-import {v1 as uuid} from "uuid"; 
+import About from './components/pages/About';
+import {v1 as uuid} from "uuid";
 
 class App extends React.Component {
   state = {
@@ -67,20 +70,33 @@ class App extends React.Component {
     this.setState({todos: [...this.state.todos, newTodo] });
   }
 
+
   render() {
     // test access to state using chrome tools
     //console.log(this.state.todos)
     return (
-      <div className="App">
-        <div className="container">
-            <Header />
-            <Addtodo addTodo={this.AddTodo} />
-            {/* Add comment using CTRL+/ */}
-            {/* renders the todos component and pass state to it */}
-            {/* d. added ToggleComplete as a function to receive the value from Todos.js see step c. */}
-            <Todos todos={this.state.todos} markComplete={ this.ToggleComplete } delTodo={ this.DeleteTodo } />
+      // If we want to use router we have to wrap this with Router
+      <Router>
+        <div className="App">
+          <div className="container">
+              <Header />
+              {/* ROUTE #1: We have to use a render prop for Router since its multiple components being routed here
+                  Also: exact was used to separate / from /about (like a grep function)    
+              */}
+              <Route exact path="/" render={ props => (
+                <React.Fragment>
+                    <Addtodo addTodo={this.AddTodo} />
+                    {/* Add comment using CTRL+/ */}
+                    {/* renders the todos component and pass state to it */}
+                    {/* d. added ToggleComplete as a function to receive the value from Todos.js see step c. */}
+                    <Todos todos={this.state.todos} markComplete={ this.ToggleComplete } delTodo={ this.DeleteTodo } />
+                </React.Fragment>
+              )} />
+              {/* Route #2: We use a component prop since the about is a single component here */}
+               <Route path="/about" component={About} /> 
+          </div>
         </div>
-      </div>
+      </Router>
     );
   }
   
